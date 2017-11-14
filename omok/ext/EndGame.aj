@@ -8,17 +8,6 @@ import omok.model.Board.Place;
 import omok.model.Player;
 
 public privileged aspect EndGame {
-	
-	pointcut gameOver(Player player):
-		execution(void Board.notifyGameOver(Player)) 
-		&& args(player);
-	
-	pointcut placeStone(OmokDialog od, Board board, Player player):
-		call(void placeStone(int, int, Player))
-		&& this(od)
-		&& target(board)
-		&& args(*, *, player);
-	
 	pointcut makeMove(OmokDialog od):
 		execution(void makeMove(Place))
 		&& this(od);
@@ -26,23 +15,22 @@ public privileged aspect EndGame {
 	pointcut newGame(OmokDialog od): 
 		execution(void OmokDialog.playButtonClicked(ActionEvent)) 
 		&& target(od); 
-	 
+
 	/**
 	 * Displays the message at the end of the game. If the board 
 	 * if full and no player won, it display "Draw!".
 	 * @param od OmokDialog handling the current game interaction
-	 * @param board Board holding all the places and game logic
-	 * @param player current Player making the move
-	 */
-	after(OmokDialog od, Board board, Player player): placeStone(od, board, player){
-		if(board.isGameOver()){
-			if(board.isWonBy(player))
-				od.showMessage(player.name() + " wins!");
+	*/
+	after(OmokDialog od): makeMove(od){
+		if(od.board.isGameOver()){
+			if(od.board.isWonBy(od.player))
+				od.showMessage(od.player.name() + " wins!");
 			else
 				od.showMessage("Draw!");
 		}
+		
 	}
-	
+
 	/**
 	 * Determines whether or not a player is allowed to make a move. 
 	 * A player can't make a move after the game has ended.
