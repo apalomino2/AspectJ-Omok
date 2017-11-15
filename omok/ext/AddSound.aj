@@ -12,33 +12,48 @@ import omok.model.Player;
 
 public privileged aspect AddSound {
 	
-	private static final String SOUND_DIR = "./sounds/";
+	private static final String SOUND_DIR = "../sounds/";
+	
 	
 	after(OmokDialog dialog): this(dialog)
     && execution(void OmokDialog.makeMove(..)) {
 		
 		System.out.println("Hi1");
     
-    if(dialog.board.isWonBy(dialog.player))
+    if(dialog.board.isGameOver())
     {
     	System.out.println("Hi4");
-    	playAudio("clapping.wav");
+    	
+    	
+			playAudio("clapping.wav");
+		
     }
     else
     {
     	if(dialog.player.name().equals("Black")) {
     		System.out.println("Hi2");
-    		playAudio("p1_s.wav");
+    		
+    			System.out.println("Hi16");
+    			playAudio("p1_s.wav");
+    		
     	} else {
     		System.out.println("Hi3");
-    		playAudio("click.wav");
+    		
+    			System.out.println("Hi17");
+    			playAudio("click.wav");
+    		
+    			
+    		
     	}
     }  
 }
 	
-	public static void playAudio(String filename) {
+	public static void playAudio(String filename)  {
+		
+		System.out.println("Hi10");
 		 
 	      try {
+	    	  System.out.println("Hi15");
 	          AudioInputStream audioIn = AudioSystem.getAudioInputStream(
 		    AddSound.class.getResource(SOUND_DIR + filename));
 	          System.out.println("Hi5");
@@ -53,6 +68,7 @@ public privileged aspect AddSound {
 	    	  System.out.println("Hi9");
 	          e.printStackTrace();
 	      }
+	      System.out.println("Hi11");
 	    }
 
 }
