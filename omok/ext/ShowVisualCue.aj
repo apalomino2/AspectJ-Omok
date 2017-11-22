@@ -16,7 +16,7 @@ import omok.base.BoardPanel;
 
 public privileged aspect ShowVisualCue {
 	public Place m1 = null;
-	public Player p1 = null;
+	public Player p1 = new Player("White");
 	private Place last = new Place(-1, -1);
 	
 	pointcut buildListener(BoardPanel bp):
