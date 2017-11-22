@@ -12,18 +12,6 @@ import omok.model.Player;
 
 public privileged aspect EndGame {
 	
-	//Around used to stop the makeMove is the game is over
-		void around(OmokDialog dialog): this(dialog)
-	    && execution(void OmokDialog.makeMove(..)) 
-	    {
-			if (dialog.board.isGameOver()) 
-			{ 
-				return;
-			}
-			else
-				 proceed(dialog);
-		}
-	
 	
 	pointcut makeMove(OmokDialog od):
 		execution(void makeMove(Place))
@@ -41,9 +29,9 @@ public privileged aspect EndGame {
 	 after(OmokDialog od): makeMove(od){
 		 if(od.board.isGameOver()){
 			 if(od.board.isWonBy(od.player))
-				 od.showMessage("Draw!");
-			 else
 				 od.showMessage(od.player.name() + " wins!");
+			 else
+				 od.showMessage("Draw!");
 			 }
 		 }
 
