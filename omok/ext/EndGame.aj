@@ -59,11 +59,11 @@ public privileged aspect EndGame {
 	after(Graphics a, BoardPanel table) : winningRow(a, table){
 		if(table.board.winningRow.size() > 0) {
 			for(Board.Place stone: table.board.winningRow){
-				a.setColor(Color.GREEN);
+				a.setColor(Color.RED);
 				int x = table.placeSize + stone.x * table.placeSize; // center x
 				int y = table.placeSize + stone.y * table.placeSize; // center y
-				int r = table.placeSize / 2;               // radius
-				a.drawOval(x - r, y - r, r * 2, r * 2);	
+				int r = table.placeSize / 3;               // radius
+				a.fillOval(x - r, y - r, r * 2, r * 2);	
 			}
 		}
 	}
