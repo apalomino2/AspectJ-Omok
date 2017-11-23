@@ -40,7 +40,11 @@ public privileged aspect EndGame {
 	 * A player can't make a move after the game has ended.
 	 * @param od OmokDialog handling the current game interaction
 	 */
-	
+	 void around(OmokDialog od): makeMove(od){
+		 		if(!od.board.isGameOver()){
+		 			proceed(od);
+		 		}
+		 		}
 	
 	/**
 	 * Determines whether or not a JOptionPane is displayed asking 
